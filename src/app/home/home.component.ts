@@ -63,14 +63,12 @@ export class HomeComponent implements OnInit {
         this.searchClicked = true;
     }
 
-    // function to filter data based on skills
+    // function to filter data based on skills/company name
     filterBySkills() {
         this.jobData = this.jobDataWithoutSkillsFilter.filter(
             data => this.searchText.toLocaleLowerCase() === '' ? data : data.skills.toLocaleLowerCase().includes(
+                this.searchText.toLocaleLowerCase()) || data.companyname.toLocaleLowerCase().includes(
                 this.searchText.toLocaleLowerCase()));
-        if (this.sortingField !== '') {
-            this.sortData(this.sortingField);
-        }
         this.countOfJobs = this.jobData.length;
     }
 

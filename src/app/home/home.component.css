@@ -7,11 +7,44 @@
     background:#FFF;
     border-radius:5px;
     margin: 10px 15px;
-    height: 300px;
+    height: 350px;
     padding: 15px 25px;
 }
 
-.horizontal-align {
-    left: 35%;
-    position: static;
+.center-align {
+    float: unset;
+    display: inline-block;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.zero-padding {
+    padding: 0;
+}
+
+.inner-addon {
+    top: 10px;
+    float: left;
+}
+
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+
+.right-addon .glyphicon {
+    right: 10px;
+}
+
+.skills-input {
+    margin-top: 100px;
+}
+
+.heading-style {
+    font-size: 16px;
+}
+
+.button-padding {
+    padding: 6px 12px;
 }

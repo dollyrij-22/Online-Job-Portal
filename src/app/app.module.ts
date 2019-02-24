@@ -5,14 +5,14 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {HttpClientModule} from '@angular/common/http';
-import {FilterData} from './filters/filter-data.pipe';
+import {DateDisplayFormat} from './filters/date-display-format';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
-        FilterData
+        DateDisplayFormat
     ],
     imports: [
         BrowserModule,

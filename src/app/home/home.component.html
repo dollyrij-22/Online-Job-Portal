@@ -1,16 +1,16 @@
 <div class = "panel panel-primary">
 
-    <div class = "panel-heading">
+    <div class = "panel-heading text-center">
         <h3 class = "panel-title">Search jobs</h3>
     </div>
 
-    <div class = "panel-body">
+    <div class = "panel-body text-center">
 
-        <div class="col-md-4">
-            <div class="col-md-3 vertical-align">
+        <div class="col-md-3 center-align">
+            <div class="col-md-4 vertical-align zero-padding">
                 <label>Experience: </label>
             </div>
-            <div class="col-md-6 dropdown">
+            <div class="col-md-8 dropdown zero-padding">
                 <select class="form-control" (change)="filterByExperience($event.target.value)" [(ngModel)] = "experience" title="experience">
                     <option value=''>--Select--</option>
                     <option *ngFor="let experience of experiences" value="{{experience}}">
@@ -20,17 +20,17 @@
             </div>
         </div>
 
-        <div class="col-md-4 form-group">
-            <div class="col-md-2 vertical-align">
+        <div class="col-md-3 form-group center-align">
+            <div class="col-md-3 vertical-align zero-padding">
                 <label>Location: </label>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9 zero-padding">
                 <input type="text" class="form-control" name="location" id="location"  placeholder="Location" [(ngModel)]="location" (change)="filterByLocation(location)">
             </div>
         </div>
 
-        <div class="col-md-4">
-            <button type="button" class="btn btn-primary btn-md col-md-4" (click)="filterData()">Search</button>
+        <div class="col-md-1 center-align ">
+            <button type="button" class="btn btn-primary btn-md col-md-12" (click)="filterData()">Search</button>
         </div>
 
     </div>
@@ -39,76 +39,88 @@
 
 <div *ngIf="searchClicked" class = "panel panel-primary">
 
-    <div class = "panel-heading">
+    <div class = "panel-heading text-center">
         <h3 class = "panel-title">Jobs listings</h3>
     </div>
 
     <div class="panel-body">
 
         <div class="col-md-12">
-            <div class="col-md-4 search-container">
-                <input type="search" name="searchText" id="searchText" placeholder="Keywords or Skills" [(ngModel)]="searchText" (change)="filterBySkills()">
-                <button type="submit"><i class="fa fa-search"></i></button>
+            <div class="col-md-2 text-center skills-input">
+                <div class="col-md-12 inner-addon right-addon center-align">
+                    <i class="glyphicon glyphicon-search"></i>
+                    <input type="text" class="form-control" name="searchText" id="searchText" placeholder="Keywords or Skills" [(ngModel)]="searchText" (change)="filterBySkills()">
+                </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-10 center-align">
+
+                <div class="col-md-11">
+
+                    <div class="col-md-2 center-align">
+                        <div class="col-md-12">
+                            <label>Total jobs: {{countOfJobs}}</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 center-align" style="float: right">
+                        <button type="button" class="btn btn-primary btn-md col-md-5" (click)="sortData('location')" style="margin-right: 40px;">Sort by Location</button>
+                        <button type="button" class="btn btn-primary btn-md col-md-5" (click)="sortData('experience')">Sort by Exp</button>
+                    </div>
+
+                </div>
+
                 <div class="col-md-12">
-                    <label>Total jobs: {{countOfJobs}}</label>
+                    <div class="card col-md-5" *ngFor="let job of jobData | slice: pageStart: pageStart+4">
+                        <div class="text">
+                            <label class="heading-style" *ngIf="job.title">Jobtitle: </label>
+                            <span> {{job.title}} </span>
+                        </div>
+                        <div class="text">
+                            <label class="heading-style" *ngIf="job.companyname">Company: </label>
+                            <span> {{job.companyname}} </span>
+                        </div>
+                        <div class="text">
+                            <label class="heading-style" *ngIf="job.location">Location: </label>
+                            <span> {{job.location}} </span>
+                        </div>
+                        <div class="text">
+                            <label class="heading-style" *ngIf="job.salary">Salary: </label>
+                            <span> {{job.salary}} </span>
+                        </div>
+                        <div class="text">
+                            <label class="heading-style" *ngIf="job.type">Type: </label>
+                            <span> {{job.type}} </span>
+                        </div>
+                        <div class="text">
+                            <label class="heading-style" *ngIf="job.startdate">Start date: </label>
+                            <span *ngIf="job.startdate != 'Immediately'"> {{job.startdate | date: 'dd MMM yyyy'}} </span>
+                            <span *ngIf="job.startdate == 'Immediately'" style="color: red"> {{job.startdate }} </span>
+                        </div>
+                        <div class="text">
+                            <label class="heading-style" *ngIf="job.enddate">End date: </label>
+                            <span> {{job.enddate | date: 'dd MMM yyyy'}} </span>
+                        </div>
+                        <div class="text">
+                            <label class="heading-style" *ngIf="job.applylink">Apply link: </label>
+                            <a href={{job.applylink}} target="_blank"> {{job.applylink}} </a>
+                        </div>
+                        <div class="text">
+                            <label class="heading-style" *ngIf="job.source">Source: </label>
+                            <span> {{job.source}} </span>
+                        </div>
+                        <div class="text">
+                            <label class="heading-style" *ngIf="job.skills">Skills: </label>
+                            <span> {{job.skills}} </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="col-md-2 vertical-align">
-                    <label>Sort: </label>
-                </div>
-                <div class="col-md-8 dropdown">
-                    <select class="form-control" (change)="sortData($event.target.value)" title="sort" [(ngModel)]="sortingField">
-                        <option value="">--Select--</option>
-                        <option value="location">By Location</option>
-                        <option value="experience">By Experience</option>
-                    </select>
-                </div>
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-primary btn-md col-md-1 center-align button-padding" *ngIf="pageStart >= 4 && jobData.length > 4" (click)="prevData()">Previous</button>
+                <button type="button" class="btn btn-primary btn-md col-md-1 center-align button-padding" style="margin-left: 30px;" *ngIf="pageStart + 4 < countOfJobs" (click)="nextData()">Next</button>
             </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="card col-md-5" *ngFor="let job of jobData | slice: pageStart: pageStart+4">
-                <div class="text">
-                    <label *ngIf="job.title">Jobtitle: {{job.title}}</label>
-                </div>
-                <div class="text">
-                    <label *ngIf="job.companyname">Company: {{job.companyname}}</label>
-                </div>
-                <div class="text">
-                    <label *ngIf="job.location">Location: {{job.location}}</label>
-                </div>
-                <div class="text">
-                    <label *ngIf="job.salary">Salary: {{job.salary}}</label>
-                </div>
-                <div class="text">
-                    <label *ngIf="job.type">Type: {{job.type}}</label>
-                </div>
-                <div class="text">
-                    <label *ngIf="job.startdate">Start date: {{job.startdate}}</label>
-                </div>
-                <div class="text">
-                    <label *ngIf="job.enddate">End date: {{job.enddate}}</label>
-                </div>
-                <div class="text">
-                    <label *ngIf="job.applylink">Apply link: {{job.applylink}}</label>
-                </div>
-                <div class="text">
-                    <label *ngIf="job.source">Source: {{job.source}}</label>
-                </div>
-                <div class="text">
-                    <label *ngIf="job.skills">Skills: {{job.skills}}</label>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-12 horizontal-align">
-            <button type="button" class="btn btn-primary btn-md col-md-2" *ngIf="pageStart >= 4" (click)="prevData()">Previous</button>
-            <button type="button" class="btn btn-primary btn-md col-md-2" style="margin-left: 30px;" *ngIf="pageStart < countOfJobs" (click)="nextData()">Next</button>
         </div>
 
     </div>
